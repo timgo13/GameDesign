@@ -51,7 +51,6 @@ public class Movement : MonoBehaviour
     public void Die()
     {
         Reset.Invoke();
-        transform.position = new Vector3(0, 0, 0);
 
     }
 }

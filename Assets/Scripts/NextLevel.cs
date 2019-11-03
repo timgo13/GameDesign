@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class NextLevel : MonoBehaviour
 {
     //[SerializeField] AudioClip triggerClip;
+    public UnityEvent nextLevel;
     AudioSource change_sound;
     void Start()
     {
@@ -21,7 +23,7 @@ public class NextLevel : MonoBehaviour
     void OnTriggerEnter(Collider other) 
     {
         change_sound.Play();
-        SceneManager.LoadScene(1);
+        nextLevel.Invoke();
         //AudioSource.PlayClipAtPoint(triggerClip, Camera.main.transform.position);
        
     }
