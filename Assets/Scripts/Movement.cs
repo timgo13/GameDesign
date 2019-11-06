@@ -13,17 +13,18 @@ public class Movement : MonoBehaviour
     public int RespawnHeight;
     // Start is called before the first frame update
     public UnityEvent Reset;
+    private Vector3 RespawnPos;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        RespawnPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         if(transform.position.y <= RespawnHeight){
-            Vector3 startpos = new Vector3(0,0,0);
-            transform.position = startpos;
+            transform.position = RespawnPos;
             Reset.Invoke();
 
         }
@@ -51,6 +52,7 @@ public class Movement : MonoBehaviour
     public void Die()
     {
         Reset.Invoke();
+        transform.position = RespawnPos;
 
     }
 }
