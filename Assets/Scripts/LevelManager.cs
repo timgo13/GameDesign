@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Transform startPos;
     [SerializeField] Text pointText;
 
-    GameObject[] pauseObjects;
+    public GameObject[] pauseObjects;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,10 +44,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    public void PlayerDied()
-    {
-        player.transform.position = startPos.position;
-    }
+   
     public void PlayerPickedUpPoints()
     {
         gameStats.score = gameStats.score + 10;

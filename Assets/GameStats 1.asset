@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: GameStats 1
   m_EditorClassIdentifier: Assembly-CSharp::GameStat
-  score: 0
+  score: 300
   initialScore: 0
