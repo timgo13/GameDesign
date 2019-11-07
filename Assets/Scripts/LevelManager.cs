@@ -11,19 +11,26 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Transform startPos;
     [SerializeField] Text pointText;
-
+    [SerializeField] Text timeText;
+    [SerializeField] Text highScoreText;
+    private float yourHighscore;
+    private int current_level;
     public GameObject[] pauseObjects;
+    private float time;
     // Start is called before the first frame update
     void Start()
     {
+        current_level = SceneManager.GetActiveScene().buildIndex;
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             gameStats.score = 0;
         }
+        time = 0;
         UpdatePointtext();
         Time.timeScale = 1;
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
         hidePaused();
+        showHighScore();
     }
 
     private void Update()
@@ -43,8 +50,19 @@ public class LevelManager : MonoBehaviour
                 hidePaused();
             }
         }
+        time = time + Time.deltaTime;
+        showTime();
+        
     }
-   
+   public void showHighScore()
+    {
+        Debug.Log(gameStats.highscore[current_level]);
+        highScoreText.text = "Highscore: " + gameStats.highscore[current_level];
+    }
+    public void showTime()
+    {
+        timeText.text = "Time: " + time;
+    }
     public void PlayerPickedUpPoints()
     {
         gameStats.score = gameStats.score + 10;
@@ -57,13 +75,22 @@ public class LevelManager : MonoBehaviour
     }
     public void Reload()
     {
-        int current_level = SceneManager.GetActiveScene().buildIndex;
-        LoadLevel(current_level);
+
+        SceneManager.LoadScene(current_level);
         gameStats.score = 0;
     }
     public void LoadLevel(int level)
     {
+        checkHighScore();
         SceneManager.LoadScene(level);
+    }
+    public void checkHighScore()
+    {
+        yourHighscore = time;
+        if (yourHighscore < gameStats.highscore[current_level])
+        {
+            gameStats.highscore[current_level] = yourHighscore;
+        }
     }
 
     public void pauseControl()
@@ -78,6 +105,10 @@ public class LevelManager : MonoBehaviour
             Time.timeScale = 1;
             hidePaused();
         }
+    }
+    public void Quit()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
     }
     public void showPaused()
     {
